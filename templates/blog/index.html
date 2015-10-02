@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block posts %}
+	{% if posts %}
+		{% for post in posts %}
+			<h2>{{post}}</h2>
+		{% endfor %}
+	{% endif %}
+{% endblock %}
+
+{% block tag %}
+	{% for tag in tags %}
+		<h5>{{tag}}</h5>
+	{% endfor %}
+{% endblock %}
