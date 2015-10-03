@@ -30,23 +30,35 @@ class Paragraph(Model):
 	image = CharField(max_length=100, blank=True)
 	code = TextField(blank=True)
 	def getCode(self):
-		list = self.code.split('\n')
-		return list
+		mylist = self.code.split('\n')
+		return mylist
+	def getText(self):
+		mylist = self.text.split('\n')
+		for l in mylist:
+			print l
+		return mylist
 	# newCode = TextArea(blank=True) 
 class Comment(Model):
 	post = ForeignKey(Post)
 	author = CharField(max_length=100, null=True)
-	profilePicLink = TextField(blank=True)
-	idLink = TextField(blank=True)
-	comment = TextField()
+	profilePicLink = TextField(blank=True, null=True)
+	idLink = TextField(blank=True, null=True)
+	comment = TextField(null=True)
 	time = DateTimeField(auto_now_add=True, null=True)
 	userUpVotes = ManyToManyField(User, blank=True, related_name='commentLikes')
 	def __unicode__(self):
-		return comment
+		return self.comment
+	class Meta:
+		ordering = ['time']
 class Reply(Model):
 	comment = ForeignKey(Comment)
+	author = CharField(max_length=100, null=True)
+	profilePicLink = TextField(blank=True)
+	idLink = TextField(blank=True)
 	reply = TextField()
 	time = DateTimeField(auto_now_add=True, null=True)
 	userUpVotes = ManyToManyField(User, blank=True, related_name='replyLikes')
 	def __unicode__(self):
 		return self.reply
+	class Meta:
+		ordering = ['time']

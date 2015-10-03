@@ -27,6 +27,13 @@ For more details contact varun13168@iiitd.ac.in
 -->
 <html lang="en">
 
+<!-- Latest compiled and minified CSS -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+
+<!-- Latest compiled and minified JavaScript -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+
+
   <head>
 <style type="text/css">
 	a{
@@ -35,12 +42,14 @@ For more details contact varun13168@iiitd.ac.in
 		font:inherit;
 	}
 </style>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Varun Bansal's blog</title>
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="{%static "images/touch/chrome-touch-icon-192x192.png" %}">
@@ -64,9 +73,35 @@ For more details contact varun13168@iiitd.ac.in
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{%static "mdl/material.min.css" %}">
     <link rel="stylesheet" href="{%static "mdl/style.css" %}">
-    
+
+
 
     </style>
+
+<style>
+.demo-layout-transparent .mdl-layout__header,
+.demo-layout-transparent .mdl-layout__drawer-button {
+  color: #F5F5F5;
+}
+</style>
+
+	<div class="demo-layout-transparent mdl-layout mdl-js-layout">
+	  <header class="mdl-layout__header mdl-layout__header--transparent">
+	<div class="mdl-layout__header-row">
+	  </header>
+	  <div class="mdl-layout__drawer" >
+	     <span class="mdl-layout-title">Navigation</span>
+	    <nav class="mdl-navigation">
+	      <a class="mdl-navigation__link" href="/">Home</a>
+	      <a class="mdl-navigation__link" href="/posts">Posts</a>
+	      {% if user.id %}
+	      <a class="mdl-navigation__link" onclick="location.href='{% url 'account_logout' %}';" style="cursor:pointer">Sign Out</a>
+	      {% endif %}
+	    </nav>
+	  </div>
+	  <main class="mdl-layout__content">
+	  </main>
+	</div>
   </head>
 {% block content %}{% endblock %}
 

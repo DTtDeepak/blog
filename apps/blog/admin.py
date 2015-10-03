@@ -5,8 +5,8 @@ from .models import *
 admin.site.register(Tag)
 # admin.site.register(Post)
 # admin.site.register(Paragraph)
-# admin.site.register(Comment)
-# admin.site.register(Reply)
+admin.site.register(Comment)
+admin.site.register(Reply)
 class ParagraphInLine(NestedStackedInline):
 	model = Paragraph
 	extra = 1

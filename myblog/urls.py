@@ -21,6 +21,11 @@ urlpatterns = [
     url(r'^$', home),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^posts', posts),
-    url(r'^(?P<url>.+)/', post),
+    url(r'^posts/$', posts),
+    url(r'^tags/$', tags),
+    url(r'^posts/(?P<url>.+)/', post),
+    url(r'^tags/(?P<name>.+)/$', tag),
+    url(r'^search/$', search),
+    url(r'^comment/', comment, name='comment'),
+    url(r'^reply/', reply, name='reply'),
 ]
