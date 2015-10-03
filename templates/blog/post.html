@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+
+  <style type="text/css">
+    body::before {
+        background-image: url('{%static 'images/bg.jpg' %}');
+        background-size: cover;
+        background-attachment: fixed;
+        content: '';
+        will-change: transform;
+        z-index: -1;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        position: fixed;
+        {% if post.backgroundImage %}
+        background-image: url('{{post.backgroundImage}}');
+        {% endif %}
+    }
+
+  </style>
+
+  <body>
+    <div class="demo-blog demo-blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">
+      <main class="mdl-layout__content">
+        
+        <div class="demo-back">
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="/posts" title="go back" role="button">
+            <i class="material-icons" role="presentation">arrow_back</i>
+          </a>
+        </div>
+        <div class="demo-blog__posts mdl-grid">
+      <style type="text/css">
+        .demo-blog--blogpost .demo-blog__posts > .mdl-card .mdl-card__media {
+        background-image: url('{{post.image}}');
+        }
+      </style>
+
+          <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__media mdl-color-text--grey-50">
+              <h3 style="
+   -webkit-text-stroke: 1px black;
+   color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+">{{post.title}}</h3>
+            </div>
+            <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta ">
+              <div align="left" style="text-align:left">
+                <div>
+                  <p>{{post.postedOn}}</p>
+                  <p>Tags: |
+                  {% for tag in post.tags.all %}
+                    {{tag}} |
+                  {% endfor %}
+                  </p>
+                </div>
+              </div>
+              <div class="section-spacer"></div>
+              <div class="meta__favorites visuallyhidden">
+                425 <i class="material-icons" role="presentation" >favorite</i>
+                <span class="visuallyhidden">favorites</span>
+              </div>
+              <div class="visuallyhidden">
+                <i class="material-icons" role="presentation">bookmark</i>
+                <span class="visuallyhidden">bookmark</span>
+              </div>
+              <div class="visuallyhidden">
+                <i class="material-icons" role="presentation">share</i>
+                <span class="visuallyhidden">share</span>
+              </div>
+            </div>
+            <div style="max-width:100%;margin-right:5%;margin-left:5%" >
+            {% for paragraph in post.paragraph_set.all %}
+              <div class="mdl-color-text--grey-700 mdl-card__supporting-text" >
+                {% if paragraph.text %}
+                  <div align="left" style="overflow:auto;min-width:30%">
+                  <p>
+                    {{paragraph.text}}
+                  </p>
+                  </div>
+                {% endif %}
+
+                {% if paragraph.code %}
+                  <div align="left" style="border:1px solid #EEEEEE;padding:10px; overflow:auto; min-width:30%">
+                  <span >
+                    {% for line in paragraph.getCode %}
+                      <pre>{{line}}</pre>
+                    {% endfor %}
+                  </span>
+                  </div>
+                {% endif %}
+
+                {% if paragraph.image %}
+                  <div align="center" style="min-width:30%">
+                    <img src="{{paragraph.image}}" style="max-width:80%; max-height=80%;" align="center">
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+            </div>
+            <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments">
+              <form>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <textarea rows=1 class="mdl-textfield__input" id="comment"></textarea>
+                  <label for="comment" class="mdl-textfield__label">Join the discussion</label>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                  <i class="material-icons" role="presentation">check</i><span class="visuallyhidden">add comment</span>
+                </button>
+              </form>
+
+              <div class="comment mdl-color-text--grey-700">
+                <header class="comment__header">
+                  <img src="{%static 'mdl/images/co1.jpg' %}" class="comment__avatar">
+                  <div class="comment__author">
+                        <strong>James Splayd<br> 2 days ago</strong>
+                  </div>
+                </header>
+                
+                <div class="comment__text">
+                  In in culpa nulla elit esse. Ex cillum enim aliquip sit sit ullamco ex eiusmod fugiat. Cupidatat ad minim officia mollit laborum magna dolor tempor cupidatat mollit. Est velit sit ad aliqua ullamco laborum excepteur dolore proident incididunt in labore elit.
+                </div>
+                
+                <div class="comment__answers">
+                  <div class="comment">
+                    <header class="comment__header">
+                      <img src="{%static 'mdl/images/co2.jpg' %}" class="comment__avatar">
+                      <div class="comment__author">
+                        <strong>James Splayd<br> 2 days ago</strong>
+                      </div>
+                    </header>
+                    <div class="comment__text">
+                      Yep, agree!
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <h1></h1>
+
+              <div class="comment mdl-color-text--grey-700">
+                <header class="comment__header">
+                  <img src="{%static 'mdl/images/co2.jpg' %}" class="comment__avatar">
+                  <div class="comment__author">
+                    <strong>James Splayd<br> 2 days ago</strong>
+                  </div>
+                </header>
+                
+                <div class="comment__text">
+                  In in culpa nulla elit esse. Ex cillum enim aliquip sit sit ullamco ex eiusmod fugiat. Cupidatat ad minim officia mollit laborum magna dolor tempor cupidatat mollit. Est velit sit ad aliqua ullamco laborum excepteur dolore proident incididunt in labore elit.
+                </div>
+                
+                <div class="comment__answers">
+                  <div class="comment">
+                    <header class="comment__header">
+                      <img src="{%static 'mdl/images/co2.jpg' %}" class="comment__avatar">
+
+                      <div class="comment__author">
+                        <strong>James Splayd<br> 2 days ago</strong>
+                      </div>
+                    </header>
+                    <div class="comment__text">
+                      Yep, agree!
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </main>
+      <div class="mdl-layout__obfuscator"></div>
+    </div>
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+
+  </body>
+</html>
+{% endblock %}

@@ -19,8 +19,8 @@ from apps.blog.views import *
 from allauth.urls import *
 urlpatterns = [
     url(r'^$', home),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^posts/(?P<url>.+)/', post),
-    url(r'^posts/', home),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^posts', posts),
+    url(r'^(?P<url>.+)/', post),
 ]
