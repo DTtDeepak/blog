@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% load staticfiles %}
+{% block content %}
+<script type="text/javascript">
+paraType = ['text'];
+</script>
+
+  <style type="text/css">
+    body::before {
+        background-image: url('{%static 'images/bg.jpg' %}');
+        background-size: cover;
+        background-attachment: fixed;
+        content: '';
+        will-change: transform;
+        z-index: -1;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        position: fixed;
+    }
+  </style>
+  <body>
+    <div class="demo-blog demo-blog--blogpost mdl-layout mdl-js-layout has-drawer is-upgraded">
+      <main class="mdl-layout__content">
+        <div class="demo-blog__posts mdl-grid">
+          <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+            <div align="left" style="margin-left:50px">
+        <h1>Add Post</h1>
+<style>
+.myformField{
+  min-width: 80%;
+}
+</style>
+
+<script type="text/javascript">
+  function submitMyPost(){
+      paratype = JSON.stringify(paraType);
+      var numOfPara = Number(document.getElementById('paragraphCounter').getAttribute('value'));
+      var url = $('input[name=urlName]').val();
+    var formData = {
+        'csrfmiddlewaretoken': '{{ csrf_token }}',
+        'paratype': paratype,
+        'title':$('input[name=titleName]').val(),
+        'url':$('input[name=urlName]').val(),
+        'gist':$('textarea[name=gistName]').val(),
+        'image':$('input[name=imageName]').val(),
+        'bimage':$('input[name=bimageName]').val(),
+        'gallery':$('input[name=galleryName]').val(),
+    };
+    for(var i=1; i<=numOfPara; i++){
+      var myid = 'paragraphID'+Number(i);
+      formData["paragraphName"+Number(i)]= document.getElementById(myid).value;
+    }
+      $('#myform').unbind('submit').bind('submit',function(event) {
+            event.preventDefault();
+            $.ajax({
+                type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                url     : "{% url 'submitpost' %}",
+                data        : formData, // our data object
+                // dataType    : 'json', // what type of data do we expect back from the server
+                encode          : true,
+                cache: false,
+                success: function () {
+                  alert(
+                    "Your blog has been posted!"
+                    );
+                  window.location.href = "/posts/"+ url;
+                },
+        
+                error : function(xhr,errmsg,err) {
+                  errorsGot = xhr.responseText
+                  console.log(errorsGot)
+                  alert("Your blog could not be posted, Please try again!");
+                },
+
+            })
+        });
+
+      $("#myform").submit(); 
+    }
+</script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"  onclick="submitMyPost()" >
+    Submit..
+  </button>
+<form  id="myform">
+  <br/>
+  <input type='hidden' name='csrfmiddlewaretoken' value='{{csrf_token}}' >
+  <input type='hidden' name='paratype' >
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField">
+    <input class="mdl-textfield__input" type="text" id="titleID" name="titleName" value="Title mera" />
+    <label class="mdl-textfield__label" for="titleID"><b>*Title...</b></label>
+  </div>
+  <br/>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField">
+    <textarea class="mdl-textfield__input" type="text" rows="2" id="gistID" name="gistName" >Gist merea</textarea>
+    <label class="mdl-textfield__label" for="gistID"><b>*Gist...</b></label>
+  </div>
+  <br/>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField">
+    <input class="mdl-textfield__input" type="text" id="urlID" name="urlName" />
+    <label class="mdl-textfield__label" for="urlID"><b>*URL...</b></label>
+  </div>
+  <br/>
+    <p>check boxes for tag</p>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField" >
+      <input class="mdl-textfield__input" type="text" id="imageID" name="imageName" value="gist mere" />
+      <label class="mdl-textfield__label" for="imageID">*Link to image...(URL)</label>
+    </div>
+    <br/>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField" >
+      <input class="mdl-textfield__input" type="text" id="bimageID" name="bimageName" />
+      <label class="mdl-textfield__label" for="bimageID">Link to Background image...(URL)</label>
+    </div>
+    <br/>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField">
+      <input class="mdl-textfield__input" type="text" id="galleryID" name="galleryName" />
+      <label class="mdl-textfield__label" for="galleryID">Link to Gallery...(URL)</label>
+    </div>
+    <br/>
+    <br/>
+    <h3>Add Content</h3>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField" id="firstdiv">
+      <textarea class="mdl-textfield__input" type="text" rows="5" id="paragraphID1" name="paragraphName1"></textarea>
+      <label class="mdl-textfield__label" for="paragraphID1"><b>*Paragraph...</b></label>
+    </div>
+    <br/>
+  </form>
+
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="addTextBox()">
+    Add Paragraph
+  </button>
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"onclick="addImageBox()">
+    Add Image
+  </button>
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="addCodeBox()">
+    Add Code
+  </button>
+  <h1><br/></h1>
+  <label id ="paragraphCounter" value=1 class="visuallyhidden" name="paragraphCounter"></label>
+
+<script type="text/javascript">
+  
+  function addTextBox() {
+    var form = document.getElementById('myform');
+    var paragrapCount = document.getElementById('paragraphCounter');
+    var count = Number(paragraphCounter.getAttribute('value')) +1 ;
+    paragraphCounter.setAttribute('value', count);
+    var newdiv = document.createElement('div');
+    var divId = 'paragraphID'+count;
+    var divName = 'paragraphName'+count;
+    newdiv.setAttribute('class','mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField is-upgraded');
+    newdiv.setAttribute('data-upgraded', ',MaterialTextField');
+    var newTextArea = document.createElement('textarea');
+    newTextArea.setAttribute('class', 'mdl-textfield__input');
+    newTextArea.setAttribute('type', 'text');
+    newTextArea.setAttribute('id', 'paragraphID'+count);
+    newTextArea.setAttribute('name', 'paragraphName'+count);
+    newTextArea.setAttribute('rows', '5');
+    newdiv.appendChild(newTextArea);
+    var newLabel = document.createElement('label');
+    newLabel.innerHTML = "Add content to your paragraph. Feel free to use HTML tags...";
+    form.appendChild(newLabel);
+    form.appendChild(newdiv);
+    var newBreak = document.createElement('br');
+    form.appendChild(newBreak);
+    paraType.push("text");
+  }
+  function addCodeBox() {
+    var form = document.getElementById('myform');
+    var paragrapCount = document.getElementById('paragraphCounter');
+    var count = Number(paragraphCounter.getAttribute('value')) +1 ;
+    paragraphCounter.setAttribute('value', count);
+    var newdiv = document.createElement('div');
+    var divId = 'paragraphID'+count;
+    var divName = 'paragraphName'+count;
+    newdiv.setAttribute('class','mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField is-upgraded');
+    newdiv.setAttribute('data-upgraded', ',MaterialTextField');
+    var newTextArea = document.createElement('textarea');
+    newTextArea.setAttribute('class', 'mdl-textfield__input');
+    newTextArea.setAttribute('type', 'text');
+    newTextArea.setAttribute('id', 'paragraphID'+count);
+    newTextArea.setAttribute('name', 'paragraphName'+count);
+    newTextArea.setAttribute('rows', '5');
+    newdiv.appendChild(newTextArea);
+    var newLabel = document.createElement('label');
+    newLabel.innerHTML = "Add Code Here! Indentation is supported! but tab is not.";
+    form.appendChild(newLabel);        
+    form.appendChild(newdiv);
+    var newBreak = document.createElement('br');
+    form.appendChild(newBreak);
+    paraType.push("code");
+  }
+    function addImageBox() {
+    console.log(document.getElementById('firstdiv'))
+    var form = document.getElementById('myform');
+    var paragrapCount = document.getElementById('paragraphCounter');
+    var count = Number(paragraphCounter.getAttribute('value')) +1 ;
+    paragraphCounter.setAttribute('value', count);
+    var newdiv = document.createElement('div');
+    var divId = 'paragraphID'+count;
+    var divName = 'paragraphName'+count;
+    newdiv.setAttribute('class','mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField is-upgraded');
+    newdiv.setAttribute('data-upgraded', ',MaterialTextField');
+    var newTextArea = document.createElement('textarea');
+    newTextArea.setAttribute('class', 'mdl-textfield__input');
+    newTextArea.setAttribute('type', 'text');
+    newTextArea.setAttribute('id', 'paragraphID'+count);
+    newTextArea.setAttribute('name', 'paragraphName'+count);
+    newTextArea.setAttribute('rows', '1');
+    newdiv.appendChild(newTextArea);
+    var newLabel = document.createElement('label');
+    newLabel.innerHTML = "Add Image Url.., I do not upload images because of low server space, imgur can be used to uplaod images.";
+    form.appendChild(newLabel);
+    form.appendChild(newdiv);
+    var newBreak = document.createElement('br');
+    form.appendChild(newBreak);
+    paraType.push("image");
+  }
+
+</script>
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </main>
+      <div class="mdl-layout__obfuscator"></div>
+    </div>
+    {% if user.id == NULL %}
+      <link rel="stylesheet" href="{%static "mdl/social-sharing.css" %}">
+    {% endif %}
+  </body>
+</html>
+
+{% endblock %}

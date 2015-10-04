@@ -53,9 +53,6 @@ def comment(request):
 	com.save()
 	return redirect(request.GET['next'])
 def reply(request):
-	print "Hello"
-	print request.POST.get('commentid')	
-	print "did I get commentid?"
 	commentid = request.POST.get('commentid')
 	comment = get_object_or_404(Comment, pk=commentid)
 	authorname = request.POST.get('author')
@@ -66,8 +63,50 @@ def reply(request):
 	rep.save()
 	return redirect(request.GET['next'])
 
-def reply(request):
-	return
+def addPost(request):
+	return render(request, 'blog/addPost.html')
+
+def submitPost(request):
+	paratype = request.POST.getlist('paratype')
+	if(len(paratype)==1):
+		paratype = str(paratype[0])
+		paratype = paratype.split('"')
+		fparatype = []
+		for i in range(1,len(paratype), 2):
+			fparatype.append(paratype[i])
+		title = request.POST.get('title')
+		gist = request.POST.get('gist')
+		image = request.POST.get('image')
+		bimage = request.POST.get('bimage')
+		gallery = request.POST.get('gallery')
+		url = request.POST.get('url')
+		post = Post()
+		post.title = title
+		post.gist = gist
+		post.image = image
+		post.backgroundImage = bimage
+		post.gallery = gallery
+		post.url = url
+		post.save()
+		for i in range(len(fparatype)):
+			content = request.POST.get('paragraphName'+str(i+1))
+			para = Paragraph()
+			if(fparatype[i]=='text'):
+				para.code = ""
+				para.image =""
+				para.text = content
+			elif(fparatype[i]=='code'):
+				para.image =""
+				para.text =""
+				para.code = content
+			elif(fparatype[i]=='image'):
+				para.code=""
+				para.text=""
+				para.image = content
+			para.post = post
+			para.save()
+	return render(request, 'blog/addPost.html')
+
 def search(request):
     if 'q' in request.GET and request.GET['q']:
     	stopwords = get_stop_words('english')
