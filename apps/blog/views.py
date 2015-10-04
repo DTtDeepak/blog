@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from apps.blog.models import *
 from itertools import chain
 from stop_words import get_stop_words
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 try:
     from django.utils import simplejson as json
 except ImportError:
@@ -42,6 +44,7 @@ def tag(request, name):
 	posts = Post.objects.all()
 	args['posts'] = posts
 	return render(request, 'blog/tag.html', args)
+@login_required	(redirect_field_name='/')
 def comment(request):
 	postid = request.POST.get('postid')
 	post = get_object_or_404(Post, pk=postid)
@@ -52,6 +55,7 @@ def comment(request):
 	com = post.comment_set.create(author=authorname,profilePicLink=profilePicLink,idLink=idLink, comment=text)
 	com.save()
 	return redirect(request.GET['next'])
+@login_required(redirect_field_name='/')
 def reply(request):
 	commentid = request.POST.get('commentid')
 	comment = get_object_or_404(Comment, pk=commentid)
@@ -63,10 +67,22 @@ def reply(request):
 	rep.save()
 	return redirect(request.GET['next'])
 
+@permission_required('apps.blog.can_add_post')
 def addPost(request):
-	return render(request, 'blog/addPost.html')
+	args = {}
+	tags = Tag.objects.all()
+	args['tags'] = tags
+	return render(request, 'blog/addPost.html', args)
 
+@permission_required('apps.blog.can_add_post')
 def submitPost(request):
+	alltags = []
+	alltag = Tag.objects.all()
+	for tag in alltag:
+		name = str(tag.name)
+		alltags.append(name.strip())
+	print alltags
+
 	paratype = request.POST.getlist('paratype')
 	if(len(paratype)==1):
 		paratype = str(paratype[0])
@@ -88,6 +104,22 @@ def submitPost(request):
 		post.gallery = gallery
 		post.url = url
 		post.save()
+		tags = request.POST.get('tags')
+		tags = str(tags)
+		tags = tags.split(',')
+		print tags
+		for i in tags:
+			i = i.strip()
+			if i in alltags:
+				tag = Tag.objects.get(name= i)
+				post.tags.add(tag)
+			else:
+				print "no, create me", i
+				tag = Tag()
+				tag.name = i
+				tag.save()
+				post.tags.add(tag)
+		post.save()
 		for i in range(len(fparatype)):
 			content = request.POST.get('paragraphName'+str(i+1))
 			para = Paragraph()
@@ -105,6 +137,7 @@ def submitPost(request):
 				para.image = content
 			para.post = post
 			para.save()
+		post.save()
 	return render(request, 'blog/addPost.html')
 
 def search(request):

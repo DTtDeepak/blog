@@ -44,6 +44,7 @@ paraType = ['text'];
         'paratype': paratype,
         'title':$('input[name=titleName]').val(),
         'url':$('input[name=urlName]').val(),
+        'tags':$('input[name=tagName]').val(),
         'gist':$('textarea[name=gistName]').val(),
         'image':$('input[name=imageName]').val(),
         'bimage':$('input[name=bimageName]').val(),
@@ -90,12 +91,12 @@ paraType = ['text'];
   <input type='hidden' name='csrfmiddlewaretoken' value='{{csrf_token}}' >
   <input type='hidden' name='paratype' >
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField">
-    <input class="mdl-textfield__input" type="text" id="titleID" name="titleName" value="Title mera" />
+    <input class="mdl-textfield__input" type="text" id="titleID" name="titleName" />
     <label class="mdl-textfield__label" for="titleID"><b>*Title...</b></label>
   </div>
   <br/>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField">
-    <textarea class="mdl-textfield__input" type="text" rows="2" id="gistID" name="gistName" >Gist merea</textarea>
+    <textarea class="mdl-textfield__input" type="text" rows="2" id="gistID" name="gistName" ></textarea>
     <label class="mdl-textfield__label" for="gistID"><b>*Gist...</b></label>
   </div>
   <br/>
@@ -104,9 +105,13 @@ paraType = ['text'];
     <label class="mdl-textfield__label" for="urlID"><b>*URL...</b></label>
   </div>
   <br/>
-    <p>check boxes for tag</p>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField" >
-      <input class="mdl-textfield__input" type="text" id="imageID" name="imageName" value="gist mere" />
+      <input class="mdl-textfield__input" type="text" id="tagsID" name="tagName" />
+      <label class="mdl-textfield__label" for="tagsID">Add Tags (multiple tags can be comma separated)</label>
+    </div>
+    <br/>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField" >
+      <input class="mdl-textfield__input" type="text" id="imageID" name="imageName" />
       <label class="mdl-textfield__label" for="imageID">*Link to image...(URL)</label>
     </div>
     <br/>
@@ -122,7 +127,7 @@ paraType = ['text'];
     <br/>
     <br/>
     <h3>Add Content</h3>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField" id="firstdiv">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label myformField" >
       <textarea class="mdl-textfield__input" type="text" rows="5" id="paragraphID1" name="paragraphName1"></textarea>
       <label class="mdl-textfield__label" for="paragraphID1"><b>*Paragraph...</b></label>
     </div>

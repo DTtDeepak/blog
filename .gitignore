@@ -61,4 +61,5 @@ target/
 local_settings.py
 dist
 db.sqlite3
-00*.py
+db2.sqlite3
+0*.py

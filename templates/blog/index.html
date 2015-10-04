@@ -70,6 +70,14 @@
           </div>
 
           <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
+          
+          {% if user.is_superuser %}
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" onclick="window.location.href='/addpost'">
+            <i class="material-icons">add</i>
+          </button>
+          
+          {% endif %}
+
             <div class="mdl-card__media mdl-color--white mdl-color-text--grey-600">
               <div align="left">
               <h1>Hi.</h1>
@@ -85,10 +93,10 @@
                 <strong>Contact Me</strong>
               </div>
               <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menubtn">
-                <a href="mailto:varun13168@iiitd.ac.in"><li class="mdl-menu__item mdl-js-ripple-effect">Email: varun13168@iiitd.ac.in</li></a>
-                <a href="https://www.facebook.com/varunbansal.buntay" target="_blank" ><li class="mdl-menu__item mdl-js-ripple-effect">Facebook</li></a>
-                <a href="https://plus.google.com/u/0/104867476004836358341/posts" target="_blank"><li class="mdl-menu__item mdl-js-ripple-effect">Google</li></a>
-                <a href="https://github.com/bansalvarun/" target="_blank"><li class="mdl-menu__item mdl-js-ripple-effect">Github</li></a>
+                <a href="mailto:varun13168@iiitd.ac.in"><li class="mdl-menu__item ">Email: varun13168@iiitd.ac.in</li></a>
+                <a href="https://www.facebook.com/varunbansal.buntay" target="_blank" ><li class="mdl-menu__item ">Facebook</li></a>
+                <a href="https://plus.google.com/u/0/104867476004836358341/posts" target="_blank"><li class="mdl-menu__item ">Google</li></a>
+                <a href="https://github.com/bansalvarun/" target="_blank"><li class="mdl-menu__item ">Github</li></a>
               </ul>
               <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                 <i class="material-icons" role="presentation">more_vert</i>
