@@ -63,3 +63,4 @@ dist
 db.sqlite3
 db2.sqlite3
 0*.py
+settings_secret.py
