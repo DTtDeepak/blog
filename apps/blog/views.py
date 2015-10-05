@@ -10,7 +10,21 @@ except ImportError:
     import json
 from django.http import HttpResponseRedirect,HttpResponse
 
-
+def error500(request):
+	args = {}
+	posts = Post.objects.order_by('-postedOn')[:5]
+	tags = Tag.objects.all()
+	args['posts'] = posts
+	args['tags'] = tags
+	return render(request, 'blog/index.html', args)
+def error404(request):
+	args = {}
+	posts = Post.objects.order_by('-postedOn')[:5]
+	tags = Tag.objects.all()
+	args['posts'] = posts
+	args['tags'] = tags
+	return render(request, 'blog/index.html', args)
+	
 def home(request):
 	args = {}
 	posts = Post.objects.order_by('-postedOn')[:5]

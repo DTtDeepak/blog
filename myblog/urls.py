@@ -17,6 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from apps.blog.views import *
 from allauth.urls import *
+handler500 = 'apps.blog.views.error500'
+# handler404 = 'apps.blog.views.error404'
 urlpatterns = [
     url(r'^$', home),
     url(r'^accounts/', include('allauth.urls')),
