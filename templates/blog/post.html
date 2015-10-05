@@ -149,9 +149,9 @@ function goBack() {
                   <!-- Facebook -->
                   <a href="{% provider_login_url "facebook" method="oauth2" %}?next={{request.path}}'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--facebook"><i class="fa fa-facebook fa-fw"></i> Facebook</a>
                   <!-- Google+ -->
-                  <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--googleplus"><i class="fa fa-google-plus fa-fw"></i> Google+</a>
+                  <a href="{% provider_login_url "google" method="oauth2" %}?next={{request.path}}'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--googleplus"><i class="fa fa-google-plus fa-fw"></i> Google+</a>
                   <!-- LinkedIn --> 
-                  <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--linkedin"><i class="fa fa-linkedin fa-fw"></i> LinkedIn</a>
+<!--                   <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--linkedin"><i class="fa fa-linkedin fa-fw"></i> LinkedIn</a> -->
                 </div>
               </section>
             {% endif %}

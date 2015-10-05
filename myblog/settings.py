@@ -124,8 +124,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-LOGIN_REDIRECT_URL = '/'
-ACCOUNT_LOGOUT_ON_GET =True
+
 SOCIALACCOUNT_PROVIDERS = \
     { 'google':
         { 'SCOPE': ['profile', 'email'],
@@ -151,3 +150,6 @@ SOCIALACCOUNT_PROVIDERS = \
         'LOCALE_FUNC': 'path.to.callable',
         'VERIFIED_EMAIL': False,
         'VERSION': 'v2.4'}}
+
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_ON_GET =True
