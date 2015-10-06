@@ -1,7 +1,7 @@
 # Blog
 
 This is blog application written in django framework. 
-It is currently live as [my personal blog at bansalvarun.me!](https://bansalvarun.me) 
+It is currently live as [my personal blog at bansalvarun.me!](http://bansalvarun.me/) 
 
 Instructions for setup
 ------------
