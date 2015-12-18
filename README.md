@@ -8,7 +8,7 @@ Instructions for setup
 
 - Clone the project
 
-        git clone https://github.com/bansalvarun/audioDownloader.git 
+        git clone https://github.com/bansalvarun/blog.git 
         cd blog
 
 - Add a secret key for this application in "settings_secret.py" (create a new file) in myblog directory as:
